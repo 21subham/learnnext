@@ -45,9 +45,9 @@ export async function POST(req: NextRequest): Promise<Response> {
   } catch (error: unknown) {
     console.error("Error generating content:", error);
 
-    const errorMessage =
-      error instanceof Error ? error.message : "An unexpected error occurred";
-
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }
