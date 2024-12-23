@@ -7,9 +7,9 @@ import { User } from "next-auth";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function DELETE(
   request: Request,
-  { params }: { params: { messageid: string } } // Type for the params object
+  { params }: { params: Promise<{ messageid: string }> } // Type for the params object
 ) {
-  const messageId = params.messageid;
+  const { messageid } = await params;
   await dbConnect();
 
   const session = await getServerSession(authOptions);
@@ -29,7 +29,7 @@ export async function DELETE(
   try {
     const updateResult = await UserModel.updateOne(
       { _id: user._id },
-      { $pull: { messages: { _id: messageId } } }
+      { $pull: { messages: { _id: messageid } } }
     );
 
     if (updateResult.modifiedCount === 0) {
