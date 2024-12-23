@@ -124,8 +124,15 @@ const Dashboard = () => {
   console.log(username);
 
   //look into it
-  const baseurl = `${window.location.protocol}//${window.location.host}`;
-  const profileUrl = `${baseurl}/u/${username}`;
+  const [profileUrl, setProfileUrl] = useState<string>("");
+  //look into it
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const baseurl = ` ${window.location.protocol}//${window.location.host}`;
+      const profileUrl = ` ${baseurl}/u/${username}`;
+      setProfileUrl(profileUrl);
+    }
+  }, [username]);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
