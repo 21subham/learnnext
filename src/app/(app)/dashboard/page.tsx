@@ -68,7 +68,7 @@ const Dashboard = () => {
           toast({
             title: "Refreshed messages",
             description: "Showing latest messages",
-            variant: "destructive",
+            variant: "default",
           });
         }
       } catch (error) {
@@ -121,7 +121,6 @@ const Dashboard = () => {
 
   //uname
   const username = session?.user.username as User;
-  console.log(username);
 
   //look into it
   const [profileUrl, setProfileUrl] = useState<string>("");
