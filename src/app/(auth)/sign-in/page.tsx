@@ -59,7 +59,7 @@ const SignIn = () => {
     }
 
     if (result?.url) {
-      router.replace("/sign-up");
+      router.replace("/dashboard");
       setIsSubmitting(false);
     }
   };
