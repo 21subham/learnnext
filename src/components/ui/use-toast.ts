@@ -1,3 +1,4 @@
+// Inspired by react-hot-toast library
 import * as React from "react";
 
 import type { ToastActionElement, ToastProps } from "@/components/ui/toast";
@@ -12,30 +13,46 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement;
 };
 
+// Removed unused actionTypes variable
+// const actionTypes = {
+//   ADD_TOAST: "ADD_TOAST",
+//   UPDATE_TOAST: "UPDATE_TOAST",
+//   DISMISS_TOAST: "DISMISS_TOAST",
+//   REMOVE_TOAST: "REMOVE_TOAST",
+// } as const
+
+type AddToastAction = {
+  type: "ADD_TOAST";
+  toast: ToasterToast;
+};
+
+type UpdateToastAction = {
+  type: "UPDATE_TOAST";
+  toast: Partial<ToasterToast>;
+};
+
+type DismissToastAction = {
+  type: "DISMISS_TOAST";
+  toastId?: ToasterToast["id"];
+};
+
+type RemoveToastAction = {
+  type: "REMOVE_TOAST";
+  toastId?: ToasterToast["id"];
+};
+
+type Action =
+  | AddToastAction
+  | UpdateToastAction
+  | DismissToastAction
+  | RemoveToastAction;
+
 let count = 0;
 
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
 }
-
-type Action =
-  | {
-      type: "ADD_TOAST";
-      toast: ToasterToast;
-    }
-  | {
-      type: "UPDATE_TOAST";
-      toast: Partial<ToasterToast>;
-    }
-  | {
-      type: "DISMISS_TOAST";
-      toastId?: ToasterToast["id"];
-    }
-  | {
-      type: "REMOVE_TOAST";
-      toastId?: ToasterToast["id"];
-    };
 
 interface State {
   toasts: ToasterToast[];
@@ -111,8 +128,6 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         toasts: state.toasts.filter((t) => t.id !== action.toastId),
       };
-    default:
-      return state;
   }
 };
 
