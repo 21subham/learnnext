@@ -18,6 +18,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Anon Messages",
   description: "Anonymous message app",
+  icons: {
+    icon: "/logos.ico",
+  },
 };
 
 export default function RootLayout({
